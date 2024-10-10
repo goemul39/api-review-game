@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Delete, Route, Path, Body, Tags, Patch } from "tsoa";
 import { consoleService } from "../services/console.service";
 import { ConsoleDTO } from "../dto/console.dto";
+import { notFound } from "../error/NotFoundError";
+import { badRequest } from "../error/BadRequestError";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -23,7 +25,7 @@ export class ConsoleController extends Controller {
     @Body() requestBody: ConsoleDTO
   ): Promise<ConsoleDTO> {
     const { name, manufacturer } = requestBody;
-    return consoleService.createConsole(name, manufacturer);
+    return name && manufacturer ?  consoleService.createConsole(name, manufacturer) : badRequest("name and manufacturer must be provided");
   }
 
   // Supprime une console par ID

@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes/index"; // tsoa va générer ce fichier
 import errorHandler from "./middlewares/errorHandler";
 
-const PORT = process.env.PORT || 8000;
+const PORT =  8999;
 
 const app: Application = express();
 
