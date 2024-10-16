@@ -1,3 +1,4 @@
+import { Game } from "../models/game.model";
 import { ConsoleDTO } from "./console.dto";
 
 export interface GameDTO {
@@ -10,4 +11,12 @@ export interface GameDTO {
 export interface CreateGameDTO {
   title: string;
   console_id: number;
+}
+
+export function mapToGameDTO(game: Game): GameDTO {
+  return {
+    id: game.id,
+    title: game.title,
+    console: game.console
+  };
 }

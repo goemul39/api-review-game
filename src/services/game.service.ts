@@ -1,5 +1,5 @@
 import { number } from "joi";
-import { CreateGameDTO, GameDTO } from "../dto/game.dto";
+import { CreateGameDTO, GameDTO, mapToGameDTO } from "../dto/game.dto";
 import { notFound } from "../error/NotFoundError";
 import { Console } from "../models/console.model";
 import { Game } from "../models/game.model";
@@ -10,7 +10,7 @@ import { forbidden } from "../error/ForbiddenError";
 export class GameService {
   // Récupère tous les jeux
   public async getAllGames(): Promise<GameDTO[]> {
-    return Game.findAll({
+    const games = Game.findAll({
       include: [
         {
           model: Console,
@@ -18,6 +18,8 @@ export class GameService {
         },
       ],
     });
+
+    return (await games).map(mapToGameDTO);
   }
 
   // Récupère un jeu par ID
