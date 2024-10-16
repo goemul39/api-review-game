@@ -3,6 +3,8 @@ import { consoleService } from "../services/console.service";
 import { ConsoleDTO } from "../dto/console.dto";
 import { notFound } from "../error/NotFoundError";
 import { badRequest } from "../error/BadRequestError";
+import { GameService, gameService } from "../services/game.service";
+import { ReviewService, reviewService } from "../services/review.service";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -31,7 +33,14 @@ export class ConsoleController extends Controller {
   // Supprime une console par ID
   @Delete("{id}")
   public async deleteConsole(@Path() id: number): Promise<void> {
-    await consoleService.deleteConsole(id);
+    const games = await gameService.getGamesByConsoleId(id);
+    for (const game of games) {
+        const reviews = await reviewService.getReviewByGameId(game.id ?? -1);
+        if (reviews.length > 0) {
+          throw new Error("Cannot delete console with existing reviews for its games.");
+        }
+      await consoleService.deleteConsole(id);
+    }
   }
 
   // Met à jour une console par ID

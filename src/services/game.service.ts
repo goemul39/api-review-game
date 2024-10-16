@@ -19,7 +19,7 @@ export class GameService {
   }
 
   // Récupère un jeu par ID
-  public async getGameById(id: number): Promise<GameDTO | null> {
+  public async getGameById(id: number): Promise<GameDTO> {
     const game = await Game.findByPk(id);
     if(!game){
       throw notFound(`Game with id ${id} not found`);
@@ -49,6 +49,18 @@ export class GameService {
     }
     await game.update({title : updatedGame.title , console_id : updatedGame.console?.id});
     return game;
+  }
+
+  public async getGamesByConsoleId(id: number): Promise<GameDTO[]> {
+    const console = await Console.findByPk(id);
+    if (!console) {
+      throw notFound(`Console with id ${id} not found`);
+    }
+    return Game.findAll({
+      where: {
+        console_id: id,
+      },
+    });
   }
 
 
