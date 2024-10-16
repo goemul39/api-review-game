@@ -41,7 +41,11 @@ Review.init(
         min: 1,  
         max: 10,
       }
-    }
+    },
+    review_text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
   },
   {
     sequelize,

@@ -1,5 +1,5 @@
 import { number } from "joi";
-import { GameDTO } from "../dto/game.dto";
+import { CreateGameDTO, GameDTO } from "../dto/game.dto";
 import { notFound } from "../error/NotFoundError";
 import { Console } from "../models/console.model";
 import { Game } from "../models/game.model";
@@ -30,25 +30,25 @@ export class GameService {
 
   public async createGame(
     title : string,
-    console ?: ConsoleDTO,
+    console_id ?: number,
   
     
   ): Promise<Game> {
     
-      const consoleFind = await Console.findByPk(console?.id);
-      return consoleFind ? Game.create({title : title, console_id : consoleFind.id}) : notFound("Console id :"+ console?.id + "");
+      const consoleFind = await Console.findByPk(console_id);
+      return consoleFind ? Game.create({title : title, console_id : consoleFind.id}) : notFound("Console id :"+ console_id + "");
     
   }
 
   
   
   // Met à jour un jeu par ID
-  public async updateGameById(id: number, updatedGame: GameDTO): Promise<GameDTO | null> {
+  public async updateGameById(id: number, updatedGame: CreateGameDTO): Promise<GameDTO | null> {
     const game = await Game.findByPk(id);
     if (!game) {
       throw notFound(`Game with id ${id} not found`);
     }
-    await game.update({title : updatedGame.title , console_id : updatedGame.console?.id});
+    await game.update({title : updatedGame.title , console_id : updatedGame.console_id});
     return game;
   }
 

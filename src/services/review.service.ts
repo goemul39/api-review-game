@@ -28,10 +28,11 @@ export class ReviewService {
   public async createReview(
     game_id: number,
     rating: number,
+    review_text: string
   ): Promise<Review> {
     const game = await Game.findByPk(game_id);
     if(game){
-      return Review.create({game_id: game_id, rating: rating });
+      return Review.create({game_id: game_id, rating: rating, review_text: review_text});
     }else{
       notFound(`Game with id ${game_id}`);
     }
@@ -48,20 +49,15 @@ export class ReviewService {
 
   public async updateReview(
     id: number,
-    game_id: number,
-    rating: number
+    rating: number,
+    review_text: string
   ): Promise<Review | null> {
     const review = await Review.findByPk(id);
-    const game = await Game.findByPk(game_id)
     if (review) {
-      if(game){
         if (rating) review.rating = rating;
-        if (game_id) review.game_id = game_id;
+        if (review_text) review.review_text = review_text;
         await review.save();
         return review;
-      }else{
-        notFound(`Game with id ${game_id}`)
-      }
     }
     notFound(`Review with id ${id}`);
   }

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Delete, Route, Path, Body, Tags, Patch } from "tsoa";
 import { consoleService } from "../services/console.service";
-import { ConsoleDTO } from "../dto/console.dto";
+import { ConsoleDTO, CreateConsoleDTO } from "../dto/console.dto";
 import { notFound } from "../error/NotFoundError";
 import { badRequest } from "../error/BadRequestError";
 import { GameService, gameService } from "../services/game.service";
@@ -25,7 +25,7 @@ export class ConsoleController extends Controller {
   // Crée une nouvelle console
   @Post("/")
   public async createConsole(
-    @Body() requestBody: ConsoleDTO
+    @Body() requestBody: CreateConsoleDTO
   ): Promise<ConsoleDTO> {
     const { name, manufacturer } = requestBody;
     return name && manufacturer ?  consoleService.createConsole(name, manufacturer) : badRequest("name and manufacturer must be provided");
@@ -48,7 +48,7 @@ export class ConsoleController extends Controller {
   @Patch("{id}")
   public async updateConsole(
     @Path() id: number,
-    @Body() requestBody: ConsoleDTO
+    @Body() requestBody: CreateConsoleDTO
   ): Promise<ConsoleDTO | null> {
     const { name, manufacturer } = requestBody;
     return consoleService.updateConsole(id, name, manufacturer);

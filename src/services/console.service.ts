@@ -8,7 +8,7 @@ export class ConsoleService {
     return await Console.findAll();
   }
 
-  // Récupère une console par ID //TODO
+  // Récupère une console par ID 
   public async getConsoleById(id: number): Promise<Console | null> {
     const console = await Console.findByPk(id);
     if(!console){
@@ -33,7 +33,7 @@ export class ConsoleService {
     }
   }
 
-  // Met à jour une console //TODO
+  // Met à jour une console 
   public async updateConsole(
     id: number,
     name?: string,

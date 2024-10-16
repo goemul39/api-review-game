@@ -1,6 +1,6 @@
 import { Controller, Get, Route, Path, Tags, Post, Body, Patch, Delete } from "tsoa";
 import { GameService, gameService } from "../services/game.service";
-import { GameDTO } from "../dto/game.dto";
+import { CreateGameDTO, GameDTO } from "../dto/game.dto";
 import { ReviewDTO } from "../dto/review.dto";
 import { notFound } from "../error/NotFoundError";
 import { ReviewService, reviewService } from "../services/review.service";
@@ -23,15 +23,15 @@ export class GameController extends Controller {
 
   // Crée un nouveau jeu
   @Post("/")
-  public async createGame(@Body() requestBody: GameDTO): Promise<GameDTO> {
-    const {title, console} = requestBody;
-    return gameService.createGame(title, console)
+  public async createGame(@Body() requestBody: CreateGameDTO): Promise<GameDTO> {
+    const {title, console_id} = requestBody;
+    return gameService.createGame(title, console_id)
 
   }
 
   // Met à jour un jeu par ID
   @Patch("{id}")
-  public async updateGameById(@Path() id: number, @Body() requestBody: GameDTO): Promise<GameDTO | null> {
+  public async updateGameById(@Path() id: number, @Body() requestBody: CreateGameDTO): Promise<GameDTO | null> {
     return gameService.updateGameById(id, requestBody);
   }
 

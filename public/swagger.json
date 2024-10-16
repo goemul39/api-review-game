@@ -32,6 +32,45 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"CreateReviewDTO": {
+				"properties": {
+					"game_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"rating": {
+						"type": "number",
+						"format": "double"
+					},
+					"review_text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"game_id",
+					"rating",
+					"review_text"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateReviewDTO": {
+				"properties": {
+					"rating": {
+						"type": "number",
+						"format": "double"
+					},
+					"review_text": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"rating",
+					"review_text"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ConsoleDTO": {
 				"properties": {
 					"id": {
@@ -63,6 +102,38 @@
 				},
 				"required": [
 					"title"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateGameDTO": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"console_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"title",
+					"console_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateConsoleDTO": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"manufacturer": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -127,7 +198,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ReviewDTO"
+								"$ref": "#/components/schemas/CreateReviewDTO"
 							}
 						}
 					}
@@ -232,7 +303,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ReviewDTO"
+								"$ref": "#/components/schemas/UpdateReviewDTO"
 							}
 						}
 					}
@@ -287,7 +358,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/GameDTO"
+								"$ref": "#/components/schemas/CreateGameDTO"
 							}
 						}
 					}
@@ -369,7 +440,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/GameDTO"
+								"$ref": "#/components/schemas/CreateGameDTO"
 							}
 						}
 					}
@@ -482,7 +553,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ConsoleDTO"
+								"$ref": "#/components/schemas/CreateConsoleDTO"
 							}
 						}
 					}
@@ -587,7 +658,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ConsoleDTO"
+								"$ref": "#/components/schemas/CreateConsoleDTO"
 							}
 						}
 					}

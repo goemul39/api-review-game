@@ -3,3 +3,10 @@ export interface ConsoleDTO {
   name?: string;
   manufacturer?: string;
 }
+
+
+
+export interface CreateConsoleDTO {
+  name: string;
+  manufacturer?: string;
+}
