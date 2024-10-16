@@ -1,6 +1,9 @@
 import { Controller, Get, Route, Path, Tags, Post, Body, Patch, Delete } from "tsoa";
-import { gameService } from "../services/game.service";
+import { GameService, gameService } from "../services/game.service";
 import { GameDTO } from "../dto/game.dto";
+import { ReviewDTO } from "../dto/review.dto";
+import { notFound } from "../error/NotFoundError";
+import { ReviewService, reviewService } from "../services/review.service";
 
 @Route("games")
 @Tags("Games")
@@ -35,6 +38,11 @@ export class GameController extends Controller {
   @Delete("{id}")
   public async deleteGame(@Path() id: number): Promise<void> {
     await gameService.deleteGame(id);
+  }
+
+  @Get("{id}/reviews")
+  public async getReviewsByGameId(@Path() id: number): Promise<ReviewDTO[]> {
+    return reviewService.getReviewByGameId(id);
   }
   
 }

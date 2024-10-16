@@ -5,6 +5,7 @@ import { notFound } from "../error/NotFoundError";
 import { badRequest } from "../error/BadRequestError";
 import { GameService, gameService } from "../services/game.service";
 import { ReviewService, reviewService } from "../services/review.service";
+import { GameDTO } from "../dto/game.dto";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -52,4 +53,11 @@ export class ConsoleController extends Controller {
     const { name, manufacturer } = requestBody;
     return consoleService.updateConsole(id, name, manufacturer);
   }
+
+@Get("{id}/games")
+public async getGamesByConsoleId(@Path() id: number): Promise<GameDTO[]> {
+  return gameService.getGamesByConsoleId(id);
+
+}
+
 }
