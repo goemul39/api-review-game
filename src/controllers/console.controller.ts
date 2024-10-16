@@ -6,6 +6,7 @@ import { badRequest } from "../error/BadRequestError";
 import { GameService, gameService } from "../services/game.service";
 import { ReviewService, reviewService } from "../services/review.service";
 import { GameDTO } from "../dto/game.dto";
+import { forbidden } from "../error/ForbiddenError";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -38,7 +39,7 @@ export class ConsoleController extends Controller {
     for (const game of games) {
         const reviews = await reviewService.getReviewByGameId(game.id ?? -1);
         if (reviews.length > 0) {
-          throw new Error("Cannot delete console with existing reviews for its games.");
+          throw forbidden("Cannot delete console with existing reviews for its games.");
         }
       await consoleService.deleteConsole(id);
     }

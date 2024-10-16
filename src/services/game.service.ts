@@ -5,6 +5,7 @@ import { Console } from "../models/console.model";
 import { Game } from "../models/game.model";
 import { ConsoleDTO } from "../dto/console.dto";
 import { ReviewService, reviewService } from "./review.service";
+import { forbidden } from "../error/ForbiddenError";
 
 export class GameService {
   // Récupère tous les jeux
@@ -67,7 +68,7 @@ export class GameService {
   public async deleteGame(id: number): Promise<void> {
     const reviews = await reviewService.getReviewByGameId(id);
     if (reviews.length > 0) {
-        throw new Error("Cannot delete game with existing reviews.");
+        throw forbidden("Cannot delete game with existing reviews.");
     }
     await Game.destroy({ where: { id } });
 }
